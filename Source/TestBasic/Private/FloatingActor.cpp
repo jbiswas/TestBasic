@@ -23,6 +23,7 @@ void AFloatingActor::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
     FVector NewLocation = GetActorLocation();
+    FRotator Rotation;
     float factor = RunningTime + DeltaTime * 1;
     float DeltaHeight = (FMath::Sin(factor) - FMath::Sin(RunningTime));
     float DeltaWidth = (FMath::Cos(factor) - FMath::Cos(RunningTime));
@@ -30,5 +31,11 @@ void AFloatingActor::Tick( float DeltaTime )
     NewLocation.Y += DeltaWidth * 20.0f;       //Scale our height by a factor of 20
     RunningTime += DeltaTime;
     SetActorLocation(NewLocation);
+    if(FMath::IsNearlyEqual(DeltaHeight, DeltaWidth, 1.e-3f)) {
+        FVector ParticleLocation(NewLocation);
+        ParticleLocation.Z += 50.f;
+        ParticleLocation.X += 100.f;
+        UGameplayStatics::SpawnEmitterAtLocation(this, Fire, ParticleLocation, Rotation, true);
+    }
 }
 

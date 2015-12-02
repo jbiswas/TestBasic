@@ -9,6 +9,7 @@ UCLASS()
 class TESTBASIC_API AFloatingActor : public AActor
 {
 	GENERATED_BODY()
+    
     UPROPERTY(EditAnywhere)
     UParticleSystem *Fire;
 	
